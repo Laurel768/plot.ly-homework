@@ -34,6 +34,27 @@ function getPlots(id) {
                 b: 30
             }
         };    
-        
+// create bar plot        
 Plotly.newPlot('bar', data, layout);
 
+// create bubble plot   
+        var trace1 = {
+            x: sampledata.samples[0].otu_ids,
+            y: sampledata.samples[0].sample_values,
+            mode: "markers",
+            marker: {
+                size: sampledata.samples[0].sampole_values,
+                color: sampledata.sampoles[0].otu_ids
+            },
+            text: sampledata.samples[0].otu_labels
+        };
+        var layout_2 = {
+            xaxis:{title: "OTU ID"},
+            height: 600,
+            width: 1000
+        };
+
+        var data1 = [trace1];
+Plotly.newPlot('bubble', data1, layout_2);
+    });
+}
