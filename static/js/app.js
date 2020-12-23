@@ -58,3 +58,32 @@ Plotly.newPlot('bar', data, layout);
 Plotly.newPlot('bubble', data1, layout_2);
     });
 }
+
+function getDemoInfo(id) {
+    d3.json("samples.json").then((data)=> {
+        var metadata = data.metadata;
+        console.log(metadata)
+        var result = metadata.filter(meta =>meta.ide.toString() ===id)[0];
+        var demographicInfo = d3.select("#sample-metadata");
+        demographicInfo.html("");
+        Object.entries(result).forEach((key) => {
+            demographisInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1] + "\n");
+        });
+    });
+}
+function optionChanged(id) {
+    getPlots(id);
+    getDemoInfo(id);
+}
+function init() {
+    var dropdown = d3.select('#selDataset');
+    d3.json("samples.json").then((data)=> {
+        consold.log(data)
+        data.names.forEach(function(name) {
+            dropdown.append("option").text(name).property("value");
+        });
+        getPlots(data.names[0];
+        getDemoInfo(data.names[0]);
+    });
+}
+init();
