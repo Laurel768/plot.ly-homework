@@ -9,7 +9,7 @@ function getPlots(id) {
         console.log(labels)
         var OTU_top = (sampledata.samples[0].otu_ids.slice(0,10)).reverse();
         var OTU_id = OTU_top.map(d => "OTU " + d);
-        console.log(`OTU IDS: ${OTD_id}`)
+        console.log(`OTU IDS: ${OTU_id}`)
         var labels = sampledata.samples[0].otu_labels.slice(0,10);
         console.log(`OTU_labels: ${labels}`)
         var trace = {
@@ -43,8 +43,8 @@ Plotly.newPlot('bar', data, layout);
             y: sampledata.samples[0].sample_values,
             mode: "markers",
             marker: {
-                size: sampledata.samples[0].sampole_values,
-                color: sampledata.sampoles[0].otu_ids
+                size: sampledata.samples[0].sample_values,
+                color: sampledata.samples[0].otu_ids
             },
             text: sampledata.samples[0].otu_labels
         };
@@ -63,11 +63,11 @@ function getDemoInfo(id) {
     d3.json("samples.json").then((data)=> {
         var metadata = data.metadata;
         console.log(metadata)
-        var result = metadata.filter(meta =>meta.ide.toString() ===id)[0];
+        var result = metadata.filter(meta =>meta.id.toString() ===id)[0];
         var demographicInfo = d3.select("#sample-metadata");
         demographicInfo.html("");
         Object.entries(result).forEach((key) => {
-            demographisInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1] + "\n");
+            demographicInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1] + "\n");
         });
     });
 }
@@ -78,11 +78,11 @@ function optionChanged(id) {
 function init() {
     var dropdown = d3.select('#selDataset');
     d3.json("samples.json").then((data)=> {
-        consold.log(data)
+        console.log(data)
         data.names.forEach(function(name) {
             dropdown.append("option").text(name).property("value");
         });
-        getPlots(data.names[0];
+        getPlots(data.names[0]);
         getDemoInfo(data.names[0]);
     });
 }
